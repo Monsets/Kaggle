@@ -8,7 +8,12 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import to_categorical
 from sklearn.model_selection import train_test_split
 from keras.callbacks import ModelCheckpoint
-from ..data.data import load_data
+from ..data.preprocessing import load_data
+
+TRAIN_SET_DATA = 'trainset-data.pic'
+TEST_SET_DATA = 'testset-data.pic'
+TRAIN_SET_LABELS = 'trainset-data.pic'
+TEST_SET_LABELS = 'testset-data.pic'
 
 input_tensor = Input(shape=(32, 32, 3))
 
@@ -28,7 +33,7 @@ model = Model(inputs=model.input, outputs=predictions)
 # compile the model (should be done *after* setting layers to non-trainable)
 model.compile(optimizer='Adam', loss='categorical_crossentropy')
 
-x, y = load_data()
+x, y = load_data(TRAIN_SET_DATA, TRAIN_SET_LABELS)
 y = to_categorical(y)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1)
